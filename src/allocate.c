@@ -8,22 +8,38 @@
 struct node *tail = NULL;
 pthread_mutex_t memory_lock;
 
+struct node *global_head;
+
+struct node *get_local_free_blk(size_t size)
+{
+  struct node *temp = global_head;
+  while(temp)
+  {
+    if((temp->size >= size) && temp->is_free)  
+    {
+      return temp;    
+    }
+    temp = temp->next;
+  }
+  return NULL;
+}
+
 void *custom_malloc(size_t size)
 {
   size_t total_size;
   void *blk;
-  struct node *head;
+  struct node *head = NULL;
   if(!size)
     return NULL;
   pthread_mutex_lock(&memory_lock);
-  head = get_free_blk(size);
+  //head = get_free_blk(size);
+  head = get_local_free_blk(size); // Added
   if(head)
   {
     head->is_free = 0;
     pthread_mutex_unlock(&memory_lock);
     return (void*)(head + 1);
   }
-
   total_size = sizeof(struct node) + size;
   blk = sbrk(total_size);
   if(blk == (void*)-1)
@@ -36,8 +52,8 @@ void *custom_malloc(size_t size)
   head->size = size;
   head->is_free = 0;
   head->next = NULL;
-  if(!head)
-      update_head(head);
+  if(!global_head)
+      global_head = head;
   if(tail)
       tail->next = head;
   tail = head;
@@ -57,14 +73,14 @@ void custom_free(void *ptr)
 
   if((char*)ptr + head->size == programbreak)
   {
-    if(head == tail)
+    if(global_head == tail)
     {
-      update_head(NULL);
+      global_head = NULL;
       tail = NULL;
     }
     else
     {
-      tmp = get_head();
+      tmp = head;
       while(tmp)
       {
         if(tmp->next == tail)
