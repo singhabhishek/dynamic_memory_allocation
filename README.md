@@ -1,4 +1,4 @@
-# dynamic_memory_allocation
+# Dynamic Memory Allocation
 
 Our algorithm using sbrk() system call to set program break or brk which defines the end of program’s data segment. We
 are using sbrk() because glibc implementation of malloc uses it.

@@ -23,11 +23,11 @@ int main(int argc, char *argv[])
   
   // Allocate 20 bytes in ptr1 pointer, 40 bytes in ptr2 pointer, 60 bytes in ptr3 pointer
   char *ptr1 = (char *)custom_malloc(sizeof(char)*20);
-  printf("Allocated 20 bytes using calloc ptr1 = %p\n", ptr1);
+  printf("Allocated 20 bytes using malloc ptr1 = %p\n", ptr1);
   char *ptr2 = (char *)custom_malloc(sizeof(char)*40);
-  printf("Allocated 40 bytes using calloc ptr2 = %p\n", ptr2);
+  printf("Allocated 40 bytes using malloc ptr2 = %p\n", ptr2);
   char *ptr3 = (char *)custom_malloc(sizeof(char)*60);
-  printf("Allocated 60 bytes using calloc ptr3 = %p\n", ptr3);
+  printf("Allocated 60 bytes using malloc ptr3 = %p\n", ptr3);
 
   // Free ptr1
   custom_free(ptr1);
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
  
   // Allocate 20 bytes in ptr4 pointer. It uses same block used by ptr1.
   char *ptr4 = (char *)custom_calloc(sizeof(char),20);
-  printf("Allocated 20 bytes using calloc ptr4 = %p\n", ptr4);
+  printf("Allocated 20 bytes using malloc ptr4 = %p\n", ptr4);
 
   // Srop timer
   clock_t end = clock() ;

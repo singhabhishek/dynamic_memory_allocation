@@ -32,8 +32,7 @@ void *custom_malloc(size_t size)
   if(!size)
     return NULL;
   pthread_mutex_lock(&memory_lock);
-  //head = get_free_blk(size);
-  head = get_local_free_blk(size); // Added
+  head = get_local_free_blk(size);
   if(head)
   {
     head->is_free = 0;
