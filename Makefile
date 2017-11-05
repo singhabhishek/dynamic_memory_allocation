@@ -1,17 +1,19 @@
 CC=gcc
-CFLAGS=-c -Wall
-LDFLAGS=
-SOURCES=examples/test.c src/linked_list.c src/allocate.c
+CFLAGS=-fPIC -Wall -g
+LDFLAGS=-shared
+SOURCES=src/linked_list.c src/allocate.c
 OBJECTS=$(SOURCES:.c=.o)
+EXAMPLE=examples/test.c
 EXECUTABLE=test
+TARGET_LIB=liballocate.so
 
-all: $(SOURCE) $(EXECUTABLE)
+all: $(TARGET_LIB) $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+$(EXECUTABLE): $(TARGET_LIB)
+	$(CC) $(EXAMPLE) $(CFLAGS) $(TARGET_LIB) -o $@
 
-.cc.o:
-	$(CC) $(CFLAGS) $< -o $@
+$(TARGET_LIB): $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 clean:
 	rm -rf src/*.o examples/*.o test
