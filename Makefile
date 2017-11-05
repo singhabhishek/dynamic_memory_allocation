@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-fPIC -Wall -g
 LDFLAGS=-shared
-SOURCES=src/linked_list.c src/allocate.c
+SOURCES=src/allocate.c
 OBJECTS=$(SOURCES:.c=.o)
 EXAMPLE=examples/test.c
 EXECUTABLE=test
