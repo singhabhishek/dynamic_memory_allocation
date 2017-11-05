@@ -16,4 +16,4 @@ $(TARGET_LIB): $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 clean:
-	rm -rf src/*.o examples/*.o test
+	rm -rf src/*.o examples/*.o test *.so
