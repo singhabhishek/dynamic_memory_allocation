@@ -80,11 +80,13 @@ void custom_free(void *ptr)
     }
     else
     {
-      tmp = head;
+      printf("Inside Else ************************************\n");
+      tmp = global_head;
       while(tmp)
       {
         if(tmp->next == tail)
         {
+	  printf("Inside if *****************\n");
           tmp->next = NULL;
           tail = tmp;
         }
@@ -131,4 +133,15 @@ void *custom_realloc(void *ptr, size_t size)
     custom_free(ptr);
   }
   return ret;
+}
+
+void print_mem_list()
+{
+  struct node *curr = global_head;
+  printf("Head = %p, tail = %p,\n", (void*)((char*)curr + 24), (void*)((char*)tail + 24));
+  while(curr)
+  {
+	printf("address = %p, chunk_size = %zu bytes, memory_available? = %u\n", (void*)((char*)curr  +24), curr->size, curr->is_free);	  
+	curr = curr->next;
+  }
 }
