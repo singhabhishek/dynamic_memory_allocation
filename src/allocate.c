@@ -80,13 +80,11 @@ void custom_free(void *ptr)
     }
     else
     {
-      printf("Inside Else ************************************\n");
       tmp = global_head;
       while(tmp)
       {
         if(tmp->next == tail)
         {
-	  printf("Inside if *****************\n");
           tmp->next = NULL;
           tail = tmp;
         }

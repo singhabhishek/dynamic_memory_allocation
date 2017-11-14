@@ -4,7 +4,7 @@
 #include <time.h>
 #include "../inc/allocate.h"
 
-//#define CUSTOM_LIB=1
+#define CUSTOM_LIB=1
 
 #ifndef CUSTOM_LIB
 #define custom_malloc malloc
@@ -15,16 +15,18 @@
 
 int main(int argc, char *argv[])
 {
-
+  char data[20];
   #ifdef CUSTOM_LIB
   printf("custom version\n");
+  strcpy(data, "Custom");
   #else
   printf("glibc version\n");
+  strcpy(data, "GLIBC");
   #endif
   // Begin Timer
   clock_t start = clock() ;
 
-  printf("============================ Custom malloc & free examples ==========================\n\n");
+  printf("============================ %s malloc & free examples ==========================\n\n", data);
   // Allocate 20 bytes in ptr1 pointer, 40 bytes in ptr2 pointer, 60 bytes in ptr3 pointer
   char *ptr1 = (char *)custom_malloc(sizeof(char)*20);
   printf("Allocated 20 bytes using malloc ptr1 = %p\n", ptr1);
@@ -46,7 +48,7 @@ int main(int argc, char *argv[])
   custom_free(ptr3);
   ptr3 = NULL;
   printf("Freed 80 bytes pointed by ptr3\n");
- 
+
   // Free ptr4
   custom_free(ptr4);
   ptr4 = NULL;
@@ -92,7 +94,7 @@ int main(int argc, char *argv[])
   clock_t end = clock() ;
 
   double elapsed_time = (end-start)/(double)CLOCKS_PER_SEC ;
-  
+
   printf("Time taken = %lf\n", elapsed_time);
 
   return 0;    
